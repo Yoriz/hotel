@@ -5,7 +5,7 @@ from db.add_test_data import add_test_data
 
 CREATE_DB = True
 ADD_TEST_DATA = True
-DB_URL = "sqlite:///hotel/hotel.db"
+DB_URL = "sqlite:///hotel.db"
 
 
 def main():
