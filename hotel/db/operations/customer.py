@@ -1,6 +1,6 @@
-from data.classes import Customer, asdict
 from sqlalchemy.orm.session import Session
-from db.tables import DBCustomer
+from hotel.data.classes import Customer, asdict
+from hotel.db.tables import DBCustomer
 
 
 def add_customer(customer: Customer, session: Session) -> Customer:
@@ -12,9 +12,9 @@ def add_customer(customer: Customer, session: Session) -> Customer:
 
 
 def main():
-    from db.init_db import init_engine, init_session_maker
-    from db.create_db import create_db
-    from db.tables import mapper_registry
+    from hotel.db.init_db import init_engine, init_session_maker
+    from hotel.db.create_db import create_db
+    from hotel.db.tables import mapper_registry
 
     engine = init_engine()
     SessionMaker = init_session_maker(engine=engine)
@@ -23,9 +23,8 @@ def main():
         first_name="Dave", last_name="Wilson", email_address="D.wilson@this.com"
     )
 
-    with SessionMaker.begin() as session: # type: ignore
+    with SessionMaker.begin() as session:  # type: ignore
         print(add_customer(customer=customer, session=session))
-    
 
 
 if __name__ == "__main__":
