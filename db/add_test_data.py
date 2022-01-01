@@ -4,7 +4,7 @@ from datetime import date
 
 
 def add_test_data(session_maker: sessionmaker) -> None:
-    with session_maker.begin() as session:
+    with session_maker.begin() as session: # type: ignore
         session: Session
         customer = DBCustomer(first_name="Yor", last_name="iz", email_address="This")
         room = DBRoom(number="1A", size=2, price=1000)
