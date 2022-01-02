@@ -1,10 +1,10 @@
-from sqlalchemy.orm.session import Session
 from hotel.data.classes import Customer, asdict
 from hotel.db.tables import DBCustomer
 from sqlalchemy import select
+from sqlalchemy.orm.session import Session
 
 
-def add_customer(customer: Customer, session: Session) -> Customer:
+def db_add_customer(customer: Customer, session: Session) -> Customer:
     db_customer = DBCustomer(**asdict(customer))
     session.add(db_customer)
     session.flush()
@@ -12,12 +12,12 @@ def add_customer(customer: Customer, session: Session) -> Customer:
     return customer
 
 
-def get_customer(id: int, session: Session) -> Customer:
-    stmt = select(DBCustomer).where(DBCustomer.id == id)
+def db_get_customer(id: int, session: Session) -> Customer:
+    stmt = select(DBCustomer).where(DBCustomer.id == id)  # type: ignore
     db_customer: DBCustomer = session.execute(stmt).scalar()
     return Customer(
         first_name=db_customer.first_name,
         last_name=db_customer.last_name,
         email_address=db_customer.email_address,
-        id=db_customer.id
+        id=db_customer.id,
     )

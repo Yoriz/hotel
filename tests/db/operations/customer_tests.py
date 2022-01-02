@@ -1,9 +1,10 @@
-from hotel.db.init_db import init_engine, init_session_maker
-from hotel.db.create_db import create_db
-from hotel.db.operations.customer import add_customer, get_customer
-from hotel.db.tables import mapper_registry
 import unittest
+
 from hotel.data.classes import Customer
+from hotel.db.create_db import create_db
+from hotel.db.init_db import init_engine, init_session_maker
+from hotel.db.operations.customer import db_add_customer, db_get_customer
+from hotel.db.tables import mapper_registry
 
 
 class CustomerTestCase(unittest.TestCase):
@@ -18,7 +19,7 @@ class CustomerTestCase(unittest.TestCase):
             first_name="Firstname", last_name="Lastname", email_address="EmailAddress"
         )
         with self.SessionMaker.begin() as session:  # type: ignore
-            returned_customer = add_customer(customer=customer, session=session)
+            returned_customer = db_add_customer(customer=customer, session=session)
         customer.id = 1
         self.assertEqual(customer, returned_customer)
 
@@ -27,10 +28,9 @@ class CustomerTestCase(unittest.TestCase):
             first_name="Firstname", last_name="Lastname", email_address="EmailAddress"
         )
         with self.SessionMaker.begin() as session:  # type: ignore
-            returned_customer = add_customer(customer=customer, session=session)
-        db_customer = get_customer(id=1, session=session)
+            returned_customer = db_add_customer(customer=customer, session=session)
+        db_customer = db_get_customer(id=1, session=session)
         self.assertEqual(returned_customer, db_customer)
-
 
 
 if __name__ == "__main__":

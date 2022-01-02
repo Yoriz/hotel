@@ -1,9 +1,9 @@
-from typing import Optional
-from sqlalchemy.orm.decl_api import registry
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship
 from datetime import date
+from typing import Optional
 
+from sqlalchemy import Column, Date, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm.decl_api import registry
 
 mapper_registry = registry()
 

@@ -1,7 +1,7 @@
+from dataclasses import asdict as asdict_
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Any, Optional
-from dataclasses import asdict as asdict_
 
 
 def asdict(dataclass, omit_id: bool = True) -> dict[str, Any]:
