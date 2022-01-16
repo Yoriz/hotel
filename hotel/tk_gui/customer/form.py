@@ -4,6 +4,9 @@ from tkinter import ttk
 from data.classes import Customer
 from tk_gui.tk_helper.tk_entry import change_entry
 
+EVENT_CUSTOMER_SAVE = "<<CustomerSave>>"
+EVENT_CUSTOMER_CANCEL = "<<CustomerCancel>>"
+
 
 class CustomerForm(tk.Toplevel):
     def __init__(self, master) -> None:
@@ -24,10 +27,13 @@ class CustomerForm(tk.Toplevel):
 
     def bind_events(self) -> None:
         self.button_frame.save_button.bind("<Button-1>", self.on_button_save)
+        self.button_frame.cancel_button.bind("<Button-1>", self.on_button_cancel)
 
     def on_button_save(self, event) -> None:
-        print("on_button_save")
-        self.event_generate("<<CustomerSave>>")
+        self.event_generate(EVENT_CUSTOMER_SAVE)
+
+    def on_button_cancel(self, event) -> None:
+        self.event_generate(EVENT_CUSTOMER_CANCEL)
 
     def update_customer_display(self, customer: Customer) -> None:
         self.control_grid.update_customer_display(customer)
@@ -111,7 +117,7 @@ def main():
         customer = customer_form.get_customer()
         print(customer)
 
-    customer_form.bind("<<CustomerSave>>", test_customer_save_event)
+    customer_form.bind(EVENT_CUSTOMER_SAVE, test_customer_save_event)
     main_window.mainloop()
 
 
